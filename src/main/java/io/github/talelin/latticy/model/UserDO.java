@@ -8,6 +8,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author pedro@TaleLin
@@ -42,5 +44,10 @@ public class UserDO extends BaseModel implements Serializable {
      * 邮箱
      */
     private String email;
+
+    /**
+     * 用户权限，用于控制左侧菜单
+     */
+    private String userRole;
 
 }

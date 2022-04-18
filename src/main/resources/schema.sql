@@ -108,6 +108,7 @@ CREATE TABLE lin_user
     nickname    varchar(24)               DEFAULT NULL COMMENT '用户昵称',
     avatar      varchar(500)              DEFAULT NULL COMMENT '头像url',
     email       varchar(100)              DEFAULT NULL COMMENT '邮箱',
+    user_role   varchar(500)              DEFAULT NULL COMMENT '用户角色列表',
     create_time datetime(3)      NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     update_time datetime(3)      NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
     delete_time datetime(3)               DEFAULT NULL,

@@ -2,14 +2,12 @@ package io.github.talelin.latticy.controller.cms;
 
 import io.github.talelin.autoconfigure.exception.NotFoundException;
 import io.github.talelin.autoconfigure.exception.ParameterException;
-import io.github.talelin.core.annotation.AdminRequired;
-import io.github.talelin.core.annotation.LoginRequired;
-import io.github.talelin.core.annotation.PermissionModule;
-import io.github.talelin.core.annotation.RefreshRequired;
+import io.github.talelin.core.annotation.*;
 import io.github.talelin.core.token.DoubleJWT;
 import io.github.talelin.core.token.Tokens;
 import io.github.talelin.latticy.common.LocalUser;
 import io.github.talelin.latticy.common.configuration.LoginCaptchaProperties;
+import io.github.talelin.latticy.common.interceptor.LoggerImpl;
 import io.github.talelin.latticy.dto.user.ChangePasswordDTO;
 import io.github.talelin.latticy.dto.user.LoginDTO;
 import io.github.talelin.latticy.dto.user.RegisterDTO;
@@ -78,15 +76,15 @@ public class UserController {
      */
     @PostMapping("/login")
     public Tokens login(@RequestBody @Validated LoginDTO validator, @RequestHeader(value = "Tag", required = false) String tag) {
-        if (captchaConfig.getEnabled()) {
-            // TODO: 使用spring validation验证。暂时还没想到怎么根据配置文件分组
-            if (!StringUtils.hasText(validator.getCaptcha()) || !StringUtils.hasText(tag)) {
-                throw new ParameterException("验证码不可为空");
-            }
-            if (!userService.verifyCaptcha(validator.getCaptcha(), tag)) {
-                throw new ParameterException(10260);
-            }
-        }
+//        if (captchaConfig.getEnabled()) {
+//            // TODO: 使用spring validation验证。暂时还没想到怎么根据配置文件分组
+//            if (!StringUtils.hasText(validator.getCaptcha()) || !StringUtils.hasText(tag)) {
+//                throw new ParameterException("验证码不可为空");
+//            }
+//            if (!userService.verifyCaptcha(validator.getCaptcha(), tag)) {
+//                throw new ParameterException(10260);
+//            }
+//        }
         UserDO user = userService.getUserByUsername(validator.getUsername());
         if (user == null) {
             throw new NotFoundException(10021);
@@ -160,7 +158,10 @@ public class UserController {
     @GetMapping("/information")
     public UserInfoVO getInformation() {
         UserDO user = LocalUser.getLocalUser();
+        System.out.println("用户信息：" + user);
         List<GroupDO> groups = groupService.getUserGroupsByUserId(user.getId());
-        return new UserInfoVO(user, groups);
+        UserInfoVO userInfoVO = new UserInfoVO(user, groups);
+        System.out.println("用户信息userInfoVO：" + userInfoVO);
+        return userInfoVO;
     }
 }

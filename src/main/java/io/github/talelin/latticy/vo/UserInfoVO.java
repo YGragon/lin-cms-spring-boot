@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,6 +44,11 @@ public class UserInfoVO {
      * 邮箱
      */
     private String email;
+
+    /**
+     * 用户权限，用于控制左侧菜单
+     */
+    private String userRole;
 
     /**
      * 分组
